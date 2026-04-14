@@ -1,11 +1,13 @@
 package com.service.skill.dto;
 
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-public class SkillCreateRequestDto {
+public class SkillAreaRequestDto {
+	@NotBlank(message = "area name is mandatory")
 	private String name;
+	@Size(max=200)
 	private String description;
-	private List<SkillAreaRequestDto> areas;
 	public String getName() {
 		return name;
 	}
@@ -17,12 +19,6 @@ public class SkillCreateRequestDto {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public List<SkillAreaRequestDto> getAreas() {
-		return areas;
-	}
-	public void setAreas(List<SkillAreaRequestDto> areas) {
-		this.areas = areas;
 	}
 	
 	

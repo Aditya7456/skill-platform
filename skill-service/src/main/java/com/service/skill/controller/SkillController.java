@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.service.skill.dto.SkillAreaRequestDto;
@@ -21,8 +20,13 @@ import com.service.skill.dto.SkillCreateRequestDto;
 import com.service.skill.dto.SkillResponseDto;
 import com.service.skill.services.SkillService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/skills")
+@Tag(name = "Skill Management APIs", description = "APIs for managing skills and skill areas")
 public class SkillController {
 		
 	private final SkillService skillService;
@@ -34,8 +38,9 @@ public class SkillController {
 	}
 	
 	// for Creating the skill
+	@Operation(summary = "create a skill with areas")
 	@PostMapping
-	public ResponseEntity<SkillResponseDto> createSkill(@RequestBody SkillCreateRequestDto request){
+	public ResponseEntity<SkillResponseDto> createSkill(@Valid @RequestBody SkillCreateRequestDto request){
 		SkillResponseDto response = skillService.createSkill(request);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
@@ -91,5 +96,10 @@ public class SkillController {
    public ResponseEntity<SkillResponseDto> updateSkill(@PathVariable Long id,@RequestBody SkillCreateRequestDto request){
 	   SkillResponseDto response = skillService.updateSkillById(id, request);
 	   return ResponseEntity.ok(response);
+   }
+   
+   @GetMapping("/test")
+   public String getTestResult() {
+	   return "result";
    }
 }
